@@ -13,3 +13,5 @@ http://{{ siteurl }}{{ activation_key_url }}
 Sincerely,
 {{ sitename }} Management
 {% endblocktrans %}
+
+
