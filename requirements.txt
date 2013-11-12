@@ -1,0 +1,8 @@
+Django
+south==0.8.1
+virtualenv==1.6
+virtualenvwrapper==2.6.3
+wsgiref==0.1.2
+django-guardian
+suit
+html2text
