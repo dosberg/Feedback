@@ -5,7 +5,7 @@
 <html lang="en">
 	<head>
     	<meta charset="utf-8">
-    	<title>{% block title %}Covoice - Get Feedback. Be Better.{% endblock %}</title>
+    	<title>{% block title %}Feedback App - Get Feedback. Be Better.{% endblock %}</title>
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
 
@@ -17,7 +17,7 @@
 		<header>
 			<!-- <img src="{% static "img/logo.png" %}" alt="Covoice" /> -->
 			<div style="float:right"><a href="{% url 'userena_signup' %}">Sign up</a> | <a href="{% url 'userena_signin' %}">Sign in</a></div>
-			<h1><a href="{% url 'index' %}">Covoice</a></h1>
+			<h1><a href="{% url 'index' %}">Feedback App</a></h1>
 		</header>
 		<section>
 			{% block content %}{% endblock %}

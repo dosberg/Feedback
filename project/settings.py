@@ -18,10 +18,14 @@ SECRET_KEY = 'a&%ihvd=g!_beiz&m&znzt4$*09+t14qa+v1@zv(@tx_vv9oi3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
+
+ADMINS = (
+    ('Doug Dosberg', 'dosberg@gmail.com'),
+)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -30,10 +34,12 @@ TEMPLATE_LOADERS = (
     #     'django.template.loaders.eggs.Loader',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
 )
-
 INSTALLED_APPS = (
     'suit',
     'django.contrib.auth',
@@ -43,13 +49,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'south',
-    
+
     'www',
     'userena',
     'guardian', 
     'easy_thumbnails', 
     'accounts',
     'django.contrib.admin',
+    'feedback',
 )
 
 MIDDLEWARE_CLASSES = (

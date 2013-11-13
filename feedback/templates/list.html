@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if feedback_list %}
+    <ul>
+	    {% for feedback in feedback_list %}
+	        <li>
+	        	<a href="">{{ feedback.title }}</a> 
+	        </li>
+	    {% endfor %}
+    </ul>
+    {% else %}
+    	{{ user.username }}, you don't have any feedback.
+    {% endif %}
+{% endblock %}
