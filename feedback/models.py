@@ -1,10 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
  
-class Feedback(models.Model):
+class Request(models.Model):
 
     user = models.ForeignKey(User,)
-    title   = models.CharField(max_length=255)
-    content = models.TextField()
-    added_at = models.DateTimeField(auto_now_add=True)
-    last_update = models.DateTimeField(auto_now=True) #
+    to   = models.CharField(max_length=255)
+    cc   = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Question(models.Model):
+
+    user = models.ForeignKey(User,)
+    question   = models.CharField(max_length=255)
+    request_id = models.IntegerField(null=True, blank=False)

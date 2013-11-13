@@ -8,31 +8,57 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Requests'
-        db.create_table(u'feedback_requests', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('person_requested', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('viewers', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'feedback', ['Requests'])
-
-        # Adding model 'Questions'
-        db.create_table(u'feedback_questions', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('question', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal(u'feedback', ['Questions'])
-
-
-    def backwards(self, orm):
         # Deleting model 'Requests'
         db.delete_table(u'feedback_requests')
 
         # Deleting model 'Questions'
         db.delete_table(u'feedback_questions')
+
+        # Adding model 'Question'
+        db.create_table(u'feedback_question', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('question', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('request_id', self.gf('django.db.models.fields.IntegerField')(null=True)),
+        ))
+        db.send_create_signal(u'feedback', ['Question'])
+
+        # Adding model 'Request'
+        db.create_table(u'feedback_request', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('to', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('cc', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal(u'feedback', ['Request'])
+
+
+    def backwards(self, orm):
+        # Adding model 'Requests'
+        db.create_table(u'feedback_requests', (
+            ('person_requested', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('viewers', self.gf('django.db.models.fields.CharField')(max_length=255)),
+        ))
+        db.send_create_signal(u'feedback', ['Requests'])
+
+        # Adding model 'Questions'
+        db.create_table(u'feedback_questions', (
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('question', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('request_id', self.gf('django.db.models.fields.IntegerField')(null=True)),
+        ))
+        db.send_create_signal(u'feedback', ['Questions'])
+
+        # Deleting model 'Question'
+        db.delete_table(u'feedback_question')
+
+        # Deleting model 'Request'
+        db.delete_table(u'feedback_request')
 
 
     models = {
@@ -72,19 +98,20 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'feedback.questions': {
-            'Meta': {'object_name': 'Questions'},
+        u'feedback.question': {
+            'Meta': {'object_name': 'Question'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'request_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
-        u'feedback.requests': {
-            'Meta': {'object_name': 'Requests'},
+        u'feedback.request': {
+            'Meta': {'object_name': 'Request'},
+            'cc': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'person_requested': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
-            'viewers': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'to': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
 

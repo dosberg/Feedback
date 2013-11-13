@@ -8,31 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Requests'
-        db.create_table(u'feedback_requests', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('person_requested', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('viewers', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'feedback', ['Requests'])
-
-        # Adding model 'Questions'
-        db.create_table(u'feedback_questions', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('question', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal(u'feedback', ['Questions'])
+        # Adding field 'Questions.request_id'
+        db.add_column(u'feedback_questions', 'request_id',
+                      self.gf('django.db.models.fields.IntegerField')(null=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Requests'
-        db.delete_table(u'feedback_requests')
-
-        # Deleting model 'Questions'
-        db.delete_table(u'feedback_questions')
+        # Deleting field 'Questions.request_id'
+        db.delete_column(u'feedback_questions', 'request_id')
 
 
     models = {
@@ -76,6 +60,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Questions'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'request_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'feedback.requests': {

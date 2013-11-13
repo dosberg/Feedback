@@ -8,16 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Requests'
-        db.create_table(u'feedback_requests', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('person_requested', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('viewers', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'feedback', ['Requests'])
-
         # Adding model 'Questions'
         db.create_table(u'feedback_questions', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -28,9 +18,6 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Deleting model 'Requests'
-        db.delete_table(u'feedback_requests')
-
         # Deleting model 'Questions'
         db.delete_table(u'feedback_questions')
 
@@ -72,19 +59,19 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'feedback.questions': {
-            'Meta': {'object_name': 'Questions'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'question': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
-        },
-        u'feedback.requests': {
-            'Meta': {'object_name': 'Requests'},
+        u'feedback.feedback': {
+            'Meta': {'object_name': 'Feedback'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'person_requested': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'viewers': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        u'feedback.questions': {
+            'Meta': {'object_name': 'Questions'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'question': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
 
