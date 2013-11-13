@@ -16,8 +16,7 @@
 	<body>
 		<header>
 			<!-- <img src="{% static "img/logo.png" %}" alt="Covoice" /> -->
-			<div style="float:right"><a href="{% url 'userena_signup' %}">Sign up</a> | <a href="{% url 'userena_signin' %}">Sign in</a></div>
-			<h1><a href="{% url 'index' %}">Feedback App</a></h1>
+			<div style="float:right"><a href="{% url 'index' %}">Home</a> | <a href="{% url 'userena_signup' %}">Sign up</a> | <a href="{% url 'userena_signin' %}">Sign in</a></div>
 		</header>
 		<section>
 			{% block content %}{% endblock %}

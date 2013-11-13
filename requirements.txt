@@ -6,3 +6,4 @@ wsgiref==0.1.2
 django-guardian
 suit
 html2text
+easy-thumbnails
