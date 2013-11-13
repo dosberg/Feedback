@@ -1,4 +1,4 @@
-covoice
+Feedback
 =======
 
-Get feedback. Be better.
+A simple feedback app.
