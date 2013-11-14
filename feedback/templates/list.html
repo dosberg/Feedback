@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    
     {% if feedback %}
     <ul>
-	    {% for feedback in feedback_list %}
+	    {% for requests in feedback.all %}
 	        <li>
-	        	<a href="">{{ feedback.title }}</a> 
+	        	<a href="">{{ requests.to }}</a> 
 	        </li>
 	    {% endfor %}
     </ul>

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
@@ -107,6 +108,9 @@ def signup(request, signup_form=SignupForm,
         Form supplied by ``signup_form``.
 
     """
+    if request.user.is_authenticated():
+        return redirect('/dashboard/')
+        
     # If signup is disabled, return 403
     if userena_settings.USERENA_DISABLE_SIGNUP:
         raise PermissionDenied
@@ -435,6 +439,9 @@ def signin(request, auth_form=AuthenticationForm,
 
     """
     form = auth_form()
+
+    if request.user.is_authenticated():
+        return redirect('/dashboard/')
 
     if request.method == 'POST':
         form = auth_form(request.POST, request.FILES)

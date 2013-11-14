@@ -1,12 +1,13 @@
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.shortcuts import render_to_response, render
-from django.contrib.auth.models import User
-from feedback.forms import FeedbackForm
+from django.shortcuts import render_to_response
+from forms import FeedbackForm
 
 from feedback.models import Request, Question
 
-
+@login_required
 def feedback_request(request):
     if request.method == 'POST':
         
@@ -18,14 +19,17 @@ def feedback_request(request):
     else:
         form = FeedbackForm() 
 
-    return render(request, 'request.html', {
+    return render_to_response('request.html', {
         'form': form,
-    })
+    }, RequestContext(request))
 
-
+@login_required
 def feedback_list(request):
     user = request.user
-    feedback = Request.objects.filter()
+
+    queryset = Request.objects.all()
+
+    feedback = queryset.query
 
     return render_to_response('list.html', {
         'feedback': feedback,
@@ -33,6 +37,7 @@ def feedback_list(request):
     }, RequestContext(request))
 
 
+@login_required
 def feedback_detail(request, id):
     user = request.user
     feedback_detail = Feedback.objects(id)
