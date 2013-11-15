@@ -1,7 +1,7 @@
-Feedback
+Feedback [WIP]
 =======
 
-A simple feedback app.
+A simple feedback app i'm working on.
 
 * cd [SOURCE_DIR]
 * git clone https://github.com/dosberg/feedback/
