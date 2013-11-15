@@ -15,8 +15,15 @@
 	</head>
 	<body>
 		<header>
-			<!-- <img src="{% static "img/logo.png" %}" alt="Covoice" /> -->
-			<div style="float:right"><a href="{% url 'index' %}">Home</a> | <a href="{% url 'userena_signup' %}">Sign up</a> | <a href="{% url 'userena_signin' %}">Sign in</a></div>
+			<div style="float:right">
+				{% if user.is_authenticated %}
+					<a href="{% url 'feedback_request' %}">Request Feedback</a> | 
+					<a href="{% url 'userena_signout' %}">Logout</a>
+				{% else %}	
+					<a href="{% url 'userena_signup' %}">Sign up</a> | 
+					<a href="{% url 'userena_signin' %}">Sign in</a>
+				{% endif %}	
+			</div>
 		</header>
 		<section>
 			{% block content %}{% endblock %}

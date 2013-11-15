@@ -2,5 +2,60 @@
 {% load humanize %}
 
 {% block content %}
-	Dashboard
+	<h1>Welcome, {{ user.username }}!</h1>
+
+	{% if messages %}
+		<div class="messages alert alert-success">
+		    {% for message in messages %}
+		    	{{ message }}
+		    {% endfor %}
+		</div>
+	{% endif %}
+
+	{% if feedback_requests %}
+	<strong>Requests sent to:</strong>
+    <ul>
+	    {% for request in feedback_requests %}
+	        <li>
+	        	<strong>{{ request.to }}</strong>
+	        	<div>
+	        		<strong>On: </strong>{{ request.timestamp }}
+	        	</div>	
+	        	{% if request.invite %}
+	        		<div>
+	        			<strong>Invited:</strong>
+			        	<ol>
+			        		<li>{{ request.invite }}</li>
+			        	</ol>	
+			        </div>	
+	        	{% endif %}
+
+	        	<div>
+	        		<strong>Id:</strong>
+	        		{{ request.id }}
+	        	</div>
+
+
+	        	<div>
+	        		<strong>Questions: </strong>
+
+	        		{% if feedback_questions %}
+		        		<ol>
+		        		{% for question in feedback_questions %}
+		        			{% if question.request_id == request.id %}
+		        			<li>{{ question.question }} - {{ question.request_id }}</li>
+		        			{% endif %}
+		        		{% endfor %}	
+		        		</ol>	
+		        	{% endif %}	
+
+		        	
+	        	</div>	
+	        	<hr />
+	        </li>
+	    {% endfor %}
+    </ul>
+    {% else %}
+    	You don't have any feedback. <a href="{% url 'feedback_request' %}">Request Feedback</a>
+    {% endif %}
 {% endblock %}

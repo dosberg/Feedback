@@ -466,7 +466,7 @@ def signin(request, auth_form=AuthenticationForm,
                 # Whereto now?
                 redirect_to = redirect_signin_function(
                     request.REQUEST.get(redirect_field_name), user)
-                return HttpResponseRedirect(redirect_to)
+                return redirect('/dashboard/')
             else:
                 return redirect(reverse('userena_disabled',
                                         kwargs={'username': user.username}))
@@ -480,7 +480,7 @@ def signin(request, auth_form=AuthenticationForm,
                                             extra_context=extra_context)(request)
 
 @secure_required
-def signout(request, next_page=userena_settings.USERENA_REDIRECT_ON_SIGNOUT,
+def signout(request, next_page='/',
             template_name='userena/signout.html', *args, **kwargs):
     """
     Signs out the user and adds a success message ``You have been signed

@@ -5,9 +5,15 @@ from django.contrib.sites.models import Site
 
 from feedback.models import Request, Question
 
+class QuestionsAdmin(admin.ModelAdmin):
+
+    list_display = ('question',)
+
+admin.site.register(Question, QuestionsAdmin)
+
 
 class FeedbackAdmin(admin.ModelAdmin):
 
-    list_display = ('user', 'to', 'cc', 'timestamp')
+    list_display = ('to', 'invite', 'timestamp')
 
 admin.site.register(Request, FeedbackAdmin)
