@@ -8,5 +8,3 @@ class Profile(UserenaBaseProfile):
                                 unique=True,
                                 verbose_name=_('user'),
                                 related_name='my_profile')
-    # favourite_snack = models.CharField(_('email'),
-    #                                    max_length=5)

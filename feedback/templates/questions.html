@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    {% if feedback_detail %}
+
+	    {% for detail in feedback_detail %}
+
+            {{ detail.name }}
+
+                {% if feedback_questions %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for question in feedback_questions %}
+                            {% if question.request.id == request.id %}
+                            <p>
+                                <label>{{ question.question }}</label>
+                                <textarea></textarea>
+                            </p>
+
+
+                            {% endif %}
+                        {% endfor %}    
+                        <input type="submit" value="Submit" />
+                    </form>    
+                    {% endif %}
+	           {% endfor %}
+    {% else %}
+    	No feedback!
+    {% endif %}
+{% endblock %}

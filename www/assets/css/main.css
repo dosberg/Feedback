@@ -5,11 +5,16 @@ body {
 }
 
 
-form .input input {
+form input {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 	width: 250px;
 }
-
+form textarea {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	width: 350px;
+	height: 100px;	
+}
 form label {
+	display: block;
 	font-weight: normal;
 }

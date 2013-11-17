@@ -1,50 +1,24 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.core.context_processors import csrf
+from django.contrib import messages
+from django.forms.formsets import formset_factory, BaseFormSet
+from django.http import HttpResponse, HttpResponseRedirect, QueryDict
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response
-from django.forms.formsets import formset_factory, BaseFormSet
-from django.core.context_processors import csrf
 from forms import FeedbackForm, QuestionForm
-from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
-
 from feedback.models import Request, Question
 
-
-# def feedback_request(request):
-   
-#     if request.method == 'POST':
-#         newrequest = Request(user=request.user)
-#         form = FeedbackForm(request.POST, instance=newrequest)
-#         questions = QuestionForm(request.POST)
-
-#         if form.is_valid() and questions.is_valid(): 
-           
-#            form.save()
-#            questions.save()
-
-#            messages.success(request, 'Your request for feedback was sent to {{ email address }}!')
-#            return redirect('dashboard')
-
-#     else:
-#         form = FeedbackForm() 
-#         questions = QuestionForm()
-
-#     return render_to_response('request.html', {
-#         'form': form,
-#         'questions': questions,
-#     }, RequestContext(request))
-
-
-
 def feedback_request(request):
+    user = request.user
 
     class RequiredFormSet(BaseFormSet):
         def __init__(self, *args, **kwargs):
             super(RequiredFormSet, self).__init__(*args, **kwargs)
             for form in self.forms:
                 form.empty_permitted = False
+
     QuestionFormSet = formset_factory(QuestionForm, max_num=10, formset=RequiredFormSet)
     if request.method == 'POST': 
 
@@ -52,7 +26,7 @@ def feedback_request(request):
         request_form = FeedbackForm(request.POST, instance=request_user) # A form bound to the POST data
       
         # Create a formset from the submitted data
-        question_formset = QuestionFormSet(request.POST)
+        question_formset = QuestionFormSet(request.POST, request.FILES)
 
         if request_form.is_valid() and question_formset.is_valid():
             request = request_form.save()
@@ -63,41 +37,45 @@ def feedback_request(request):
                 question.request = request
                 question.save()
                 
-                #messages.success(request, 'Your request for feedback was sent to {{ email address }}!')
-                return redirect('dashboard')
+            # TODO: messages.success(request, 'Your request for feedback was sent to {{ email address }}!')
+            return redirect('dashboard')
     else:
         request_form = FeedbackForm()
         question_formset = QuestionFormSet()
 
-    # For CSRF protection
-    c = {'request_form': request_form ,
-         'question_formset': question_formset,
-        }
-    c.update(csrf(request))
-
-    return render_to_response('request.html', c)
-
-
-
-
-@login_required
-def feedback_list(request):
-    user = request.user
-
-    feedback = Request.objects.filter(user=request.user).reverse()
-
-    return render_to_response('list.html', {
-        'feedback': feedback,
+    return render_to_response('request.html', {
+        'request_form': request_form,
+        'question_formset': question_formset,
         'user': user,
     }, RequestContext(request))
 
 
 @login_required
-def feedback_detail(request, id):
+def feedback_questions(request, url):
     user = request.user
-    feedback_detail = Feedback.objects(id)
+    feedback_detail = Request.objects.filter(url=url)
 
-    return render_to_response('detail.html', {
-        'feedback_detail ': feedback_detail ,
+    if request.method == 'POST': 
+
+        for request in feedback_detail:
+            request_id = request.id
+
+            feedback_questions = Question.objects.filter()
+            print 'posted'
+    else:        
+
+        for request in feedback_detail:
+            request_id = request.id
+
+            feedback_questions = Question.objects.filter()
+
+
+    return render_to_response('questions.html', {
+        'feedback_detail': feedback_detail,
         'user': user,
+        'feedback_questions': feedback_questions,
     }, RequestContext(request))
+
+
+
+

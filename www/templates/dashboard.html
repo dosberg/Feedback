@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block content %}
-	<h1>Welcome, {{ user.username }}!</h1>
+	<h1>Dashboard</h1>
 
 	{% if messages %}
 		<div class="messages alert alert-success">
@@ -17,10 +17,17 @@
     <ul>
 	    {% for request in feedback_requests %}
 	        <li>
-	        	<strong>{{ request.to }}</strong>
+	        	<strong>{{ request.name }}</strong><br />
+	        	<strong>{{ request.email }}</strong>
 	        	<div>
 	        		<strong>On: </strong>{{ request.timestamp }}
 	        	</div>	
+	        	<div>
+	        		<strong>Viewed: </strong>{{ request.viewed }}
+	        	</div>	
+	        	<div>
+	        		<strong>Date Viewed: </strong>{{ request.viewed_date }}
+	        	</div>		        	
 	        	{% if request.invite %}
 	        		<div>
 	        			<strong>Invited:</strong>
@@ -29,28 +36,27 @@
 			        	</ol>	
 			        </div>	
 	        	{% endif %}
-
 	        	<div>
 	        		<strong>Id:</strong>
 	        		{{ request.id }}
 	        	</div>
-
-
 	        	<div>
 	        		<strong>Questions: </strong>
-
 	        		{% if feedback_questions %}
 		        		<ol>
 		        		{% for question in feedback_questions %}
-		        			{% if question.request_id == request.id %}
-		        			<li>{{ question.question }} - {{ question.request_id }}</li>
+		        			{% if question.request.id == request.id %}
+		        			<li>{{ question.question }}</li>
 		        			{% endif %}
 		        		{% endfor %}	
 		        		</ol>	
-		        	{% endif %}	
+		        	{% endif %}
+	        	</div>
 
-		        	
-	        	</div>	
+	   	       	<div>
+	        		<strong>URL:</strong>
+	        		<a href="{% url 'feedback' %}{{ request.url }}">{% url 'feedback' %}{{ request.url }}</a>
+	        	</div>     		
 	        	<hr />
 	        </li>
 	    {% endfor %}
