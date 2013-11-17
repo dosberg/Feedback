@@ -8,7 +8,7 @@ gettext = lambda s: s
 
 USERENA_SIGNIN_AFTER_SIGNUP = getattr(settings,
                                       'USERENA_SIGNIN_AFTER_SIGNUP',
-                                      False)
+                                      True)
 
 USERENA_REDIRECT_ON_SIGNOUT = getattr(settings,
                                       'USERENA_REDIRECT_ON_SIGNOUT',
@@ -16,11 +16,11 @@ USERENA_REDIRECT_ON_SIGNOUT = getattr(settings,
 
 USERENA_SIGNIN_REDIRECT_URL = getattr(settings,
                                       'USERENA_SIGNIN_REDIRECT_URL',
-                                      '/accounts/%(username)s/')
+                                      '/dashboard/')
 
 USERENA_ACTIVATION_REQUIRED = getattr(settings,
                                       'USERENA_ACTIVATION_REQUIRED',
-                                      True)
+                                      False)
 
 USERENA_ACTIVATION_DAYS = getattr(settings,
                                   'USERENA_ACTIVATION_DAYS',
@@ -28,7 +28,7 @@ USERENA_ACTIVATION_DAYS = getattr(settings,
 
 USERENA_ACTIVATION_NOTIFY = getattr(settings,
                                     'USERENA_ACTIVATION_NOTIFY',
-                                    True)
+                                    False)
 
 USERENA_ACTIVATION_NOTIFY_DAYS = getattr(settings,
                                          'USERENA_ACTIVATION_NOTIFY_DAYS',
@@ -93,7 +93,7 @@ USERENA_DISABLE_SIGNUP = getattr(settings,
 
 USERENA_USE_MESSAGES = getattr(settings,
                                'USERENA_USE_MESSAGES',
-                               True)
+                               False)
 
 USERENA_LANGUAGE_FIELD = getattr(settings,
                                  'USERENA_LANGUAGE_FIELD',

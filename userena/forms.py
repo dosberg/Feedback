@@ -25,13 +25,6 @@ class SignupForm(forms.Form):
     Also requires the password to be entered twice.
 
     """
-    acount_type_choices = (
-        (0, "-- Select --"),
-        (1, "Individual"),
-        (2, "Company"),
-    )
-    acount_type = forms.ChoiceField(label=_("Account type:"), choices=acount_type_choices)
-
     username = forms.RegexField(regex=USERNAME_RE,
                                 max_length=30,
                                 widget=forms.TextInput(attrs=attrs_dict),

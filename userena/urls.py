@@ -8,6 +8,7 @@ from userena import settings as userena_settings
 
 urlpatterns = patterns('',
     # Signup, signin and signout
+
     url(r'^signup/$',
        userena_views.signup,
        name='userena_signup'),

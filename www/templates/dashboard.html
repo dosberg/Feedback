@@ -37,10 +37,6 @@
 			        </div>	
 	        	{% endif %}
 	        	<div>
-	        		<strong>Id:</strong>
-	        		{{ request.id }}
-	        	</div>
-	        	<div>
 	        		<strong>Questions: </strong>
 	        		{% if feedback_questions %}
 		        		<ol>
@@ -62,6 +58,7 @@
 	    {% endfor %}
     </ul>
     {% else %}
-    	You don't have any feedback. <a href="{% url 'feedback_request' %}">Request Feedback</a>
+    	<p>Thanks for signing up! To get started ask someone for feedback.</p> 
+    	<a href="{% url 'feedback_request' %}" class="btn btn-primary">Request Feedback</a>
     {% endif %}
 {% endblock %}

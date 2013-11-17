@@ -16,6 +16,8 @@ from django.http import Http404, HttpResponseRedirect
 
 from userena.forms import (SignupForm, SignupFormOnlyEmail, AuthenticationForm,
                            ChangeEmailForm, EditProfileForm)
+
+from accounts.forms import SignupFormExtra
 from userena.models import UserenaSignup
 from userena.decorators import secure_required
 from userena.backends import UserenaAuthenticationBackend
@@ -74,8 +76,8 @@ class ProfileListView(ListView):
         return queryset
 
 @secure_required
-def signup(request, signup_form=SignupForm,
-           template_name='userena/signup_form.html', success_url=None,
+def signup(request, signup_form=SignupFormExtra,
+           template_name='userena/signup_form.html', success_url='/dashboard/',
            extra_context=None):
     """
     Signup of an account.

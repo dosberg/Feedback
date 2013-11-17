@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
     
@@ -6,19 +7,16 @@
 
 	    {% for detail in feedback_detail %}
 
-            {{ detail.name }}
+            <h1>{{ detail.name }}, please answer the following questions</h1>
 
                 {% if feedback_questions %}
                     <form method="POST">
-                        {% csrf_token %}
                         {% for question in feedback_questions %}
                             {% if question.request.id == request.id %}
                             <p>
                                 <label>{{ question.question }}</label>
                                 <textarea></textarea>
                             </p>
-
-
                             {% endif %}
                         {% endfor %}    
                         <input type="submit" value="Submit" />

@@ -22,7 +22,6 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
-
 ADMINS = (
     ('Doug Dosberg', 'dosberg@gmail.com'),
 )
@@ -48,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
     'south',
 
     'www',
@@ -85,13 +85,13 @@ AUTH_PROFILE_MODULE = 'accounts.Profile'
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_MUGSHOT_SIZE = 140
 
-# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'yourgmailaccount@gmail.com'
-# EMAIL_HOST_PASSWORD = 'yourgmailpassword'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'yourgmailaccount@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourgmailpassword'
 
 ROOT_URLCONF = 'project.urls'
 
@@ -137,4 +137,4 @@ ANONYMOUS_USER_ID = -1
 
 STATIC_URL = '/static/'
 
-
+SITE_ID = 1
