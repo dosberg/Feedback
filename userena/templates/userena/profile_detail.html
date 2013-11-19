@@ -34,21 +34,13 @@
               <dt>{% trans "Email" %}</dt>
               <dd>{{ profile.user.email }}</dd>
             {% endif %}
-            {% if profile.age %}
-              <dt>{% trans "Age" %}</dt>
-              <dd>{{ profile.age }}</dd>
-            {% endif %}
-            {% if profile.website %}
-              <dt>{% trans "Website" %}</dt>
-              <dd>{{ profile.website|urlize }}</dd>
-            {% endif %}
-            {% if profile.location %}
-              <dt>{% trans "Location" %}</dt>
-              <dd>{{ profile.location }}</dd>
-            {% endif %}
-            {% if profile.about_me %}
-              <dt>{% trans "About me" %}</dt>
-              <dd>{{ profile.about_me }}</dd>
+            {% if profile.account_type %}
+              <dt>Account type</dt>
+              <dd>{{ profile.get_account_type_display }}</dd>
+            {% endif %}            
+            {% if profile.company_name %}
+              <dt>Company name</dt>
+              <dd>{{ profile.company_name }}</dd>
             {% endif %}
           {% endblock %}
         </dl>

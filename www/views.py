@@ -13,6 +13,7 @@ def index(request):
 
 	return render_to_response('index.html', {}, context_instance=RequestContext(request))
 
+
 def dashboard(request):
 	feedback_questions = []
 	user = request.user
@@ -28,3 +29,11 @@ def dashboard(request):
 		'feedback_requests': feedback_requests,
 		'feedback_questions': feedback_questions,
 		}, context_instance=RequestContext(request))	
+
+
+def plans(request):
+    if request.user.is_authenticated():
+        return redirect('/dashboard/')
+    else:    
+
+	return render_to_response('plans.html', {}, context_instance=RequestContext(request))

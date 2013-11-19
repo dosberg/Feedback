@@ -8,3 +8,7 @@ class Profile(UserenaBaseProfile):
                                 unique=True,
                                 verbose_name=_('user'),
                                 related_name='my_profile')
+
+class Company(models.Model):
+	created_by = models.CharField(User, max_length=255)
+	name   = models.TextField(blank=True, max_length=644)  

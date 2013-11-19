@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+	<h1>Select Plan</h1>
+	<p>Please select an account type below.</p>
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Individual</h3>
+	  	</div>
+	  	<div class="panel-body">
+			<p>This account type is for individuals looking for direct feedback</p>
+			<a href="{% url 'userena_signup' %}" class="btn btn-primary">Sign up!</a>
+	  	</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Company</h3>
+	  	</div>
+	  	<div class="panel-body">
+		<p>This account type is for companies looking to provide a way for employees to give feedback to one another.</p>
+		<a href="{% url 'userena_company_signup' %}" class="btn btn-primary">Sign up!</a>
+	  	</div>
+	</div>
+{% endblock %}

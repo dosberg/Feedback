@@ -242,6 +242,24 @@ class UserenaBaseProfile(models.Model):
         ('closed', _('Closed')),
     )
 
+    privacy = models.CharField(_('privacy'),
+                               max_length=15,
+                               choices=PRIVACY_CHOICES,
+                               default=userena_settings.USERENA_DEFAULT_PRIVACY,
+                               help_text=_('Designates who can view your profile.'))
+
+    ACCOUNT_TYPE_CHOICES = (
+        (0, "-- Select --"),
+        (1, "Individual"),
+        (2, "Company"),
+    )
+
+    account_type = models.IntegerField(choices=ACCOUNT_TYPE_CHOICES, default=0)
+
+    company_name = models.CharField(_('Company name'),
+                                      max_length=255,
+                                      blank=True)
+
     MUGSHOT_SETTINGS = {'size': (userena_settings.USERENA_MUGSHOT_SIZE,
                                  userena_settings.USERENA_MUGSHOT_SIZE),
                         'crop': userena_settings.USERENA_MUGSHOT_CROP_TYPE}
@@ -252,11 +270,6 @@ class UserenaBaseProfile(models.Model):
                                     resize_source=MUGSHOT_SETTINGS,
                                     help_text=_('A personal image displayed in your profile.'))
 
-    privacy = models.CharField(_('privacy'),
-                               max_length=15,
-                               choices=PRIVACY_CHOICES,
-                               default=userena_settings.USERENA_DEFAULT_PRIVACY,
-                               help_text=_('Designates who can view your profile.'))
 
     objects = UserenaBaseProfileManager()
 
