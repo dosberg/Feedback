@@ -10,5 +10,6 @@ class Profile(UserenaBaseProfile):
                                 related_name='my_profile')
 
 class Company(models.Model):
-	created_by = models.CharField(User, max_length=255)
-	name   = models.TextField(blank=True, max_length=644)  
+	name   = models.TextField(blank=True, max_length=644) 
+	date_created = models.DateTimeField(auto_now_add=True) 
+	creator_id = models.CharField(User, max_length=255)	

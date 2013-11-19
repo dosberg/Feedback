@@ -41,10 +41,8 @@ def company_dashboard(request):
 	user = request.user
 	profile = user.get_profile()
 
-	# Prevent user who only have an Individual account
-	if user.get_profile() != '2':
-		return redirect('/dashboard/')
-	else: 
+	# Only allow user who have a Company and are Admins
+	if profile.account_type == 2 and profile.role == 2:
 		feedback_requests = Request.objects.filter(user=user).order_by('timestamp').reverse()
 
 		for request in feedback_requests:
@@ -55,7 +53,9 @@ def company_dashboard(request):
 			'feedback_requests': feedback_requests,
 			'feedback_questions': feedback_questions,
 			'profile': profile,
-			}, context_instance=RequestContext(request))			
+			}, context_instance=RequestContext(request))		
+	else: 
+		return redirect('/dashboard/')			
 
 
 def plans(request):

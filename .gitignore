@@ -1,4 +1,9 @@
-.venv
 db.sqlite3
 .DS_Store
 src/
+*.pyc
+.ssh
+venv
+.venv
+*.sublime-project
+*.sublime-workspace

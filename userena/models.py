@@ -235,61 +235,33 @@ class UserenaSignup(models.Model):
 
 
 class UserenaBaseProfile(models.Model):
-    """ Base model needed for extra profile functionality """
-    PRIVACY_CHOICES = (
-        ('open', _('Open')),
-        ('registered', _('Registered')),
-        ('closed', _('Closed')),
-    )
-
-    privacy = models.CharField(_('privacy'),
-                               max_length=15,
-                               choices=PRIVACY_CHOICES,
-                               default=userena_settings.USERENA_DEFAULT_PRIVACY,
-                               help_text=_('Designates who can view your profile.'))
 
     ACCOUNT_TYPE_CHOICES = (
         (0, "-- Select --"),
         (1, "Individual"),
         (2, "Company"),
     )
-
-    account_type = models.IntegerField(choices=ACCOUNT_TYPE_CHOICES, default=0)
-
-    company_name = models.CharField(_('Company name'),
-                                      max_length=255,
-                                      blank=True)
-
-    MUGSHOT_SETTINGS = {'size': (userena_settings.USERENA_MUGSHOT_SIZE,
+    ROLES_CHOICES = (
+        (0, "-- Select --"),
+        (1, "User"),
+        (2, "Admin"),
+    )
+    AVATAR_SETTINGS = {'size': (userena_settings.USERENA_MUGSHOT_SIZE,
                                  userena_settings.USERENA_MUGSHOT_SIZE),
                         'crop': userena_settings.USERENA_MUGSHOT_CROP_TYPE}
 
-    mugshot = ThumbnailerImageField(_('mugshot'),
+    account_type = models.IntegerField(choices=ACCOUNT_TYPE_CHOICES, default=0)
+    role = models.IntegerField(choices=ROLES_CHOICES, default=0)
+    company_id = models.IntegerField(default=0)
+    avatar = ThumbnailerImageField(_('mugshot'),
                                     blank=True,
                                     upload_to=upload_to_mugshot,
-                                    resize_source=MUGSHOT_SETTINGS,
+                                    resize_source=AVATAR_SETTINGS,
                                     help_text=_('A personal image displayed in your profile.'))
-
 
     objects = UserenaBaseProfileManager()
 
-
     class Meta:
-        """
-        Meta options making the model abstract and defining permissions.
-
-        The model is ``abstract`` because it only supplies basic functionality
-        to a more custom defined model that extends it. This way there is not
-        another join needed.
-
-        We also define custom permissions because we don't know how the model
-        that extends this one is going to be called. So we don't know what
-        permissions to check. For ex. if the user defines a profile model that
-        is called ``MyProfile``, than the permissions would be
-        ``add_myprofile`` etc. We want to be able to always check
-        ``add_profile``, ``change_profile`` etc.
-
-        """
         abstract = True
         permissions = PROFILE_PERMISSIONS
 
