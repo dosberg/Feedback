@@ -9,10 +9,15 @@
     </div>
     {{ question_formset.management_form }}
     {% for form in question_formset.forms %}
-    <div class="item">
-      {{ form.as_p }}
-      <p style=""><a class="delete" href="#">Delete</a></p>
-    </div>
+        <div class="item">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 for="id_form-0-question" class="panel-title">Ask a question (e.g. What am I doing well?):</h3>
+                    <a href="#" class="delete">Delete</a>
+                </div>
+                <textarea rows="10" name="form-0-question" id="id_form-0-question" cols="40"></textarea>
+            </div>
+        </div>
     {% endfor %}
     <p><a id="add" href="#">Add another item</a></p>
     <input type="submit" class="btn btn-primary" value="Send Invitation" />
@@ -65,10 +70,10 @@ $(document).ready(function () {
             $(".errorlist", row).remove();
             $(row).children().removeClass("error");
 
-            $(row).children().children().each(function () {
+            $(row).children().children().children().each(function () {
                 updateElementIndex(this, prefix, formCount);
                 $(this).val("");
-                $(this).closest('label').text('Ask another question (e.g. What can I do better?):');
+                $(this).closest('h3').text('Ask another question (e.g. What can I do better?):');
 
             });
 

@@ -58,7 +58,15 @@
 	    {% endfor %}
     </ul>
     {% else %}
-    	<p>Thanks for signing up! To get started ask someone for feedback.</p> 
-    	<a href="{% url 'feedback_request' %}" class="btn btn-primary">Request Feedback</a>
+
+    <div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">0 Feedback</h3>
+	  	</div>
+	  	<div class="panel-body">
+    		<p>Get started by asking someone for feedback.</p> 
+    		<a href="{% url 'feedback_request' %}" class="btn btn-primary">Request Feedback</a>
+	  	</div>
+	</div>
     {% endif %}
 {% endblock %}

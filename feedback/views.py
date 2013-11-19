@@ -1,14 +1,15 @@
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from django.contrib import messages
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.http import HttpResponse, HttpResponseRedirect, QueryDict
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response
+from django.conf import settings
+from django.contrib import messages
 from forms import FeedbackForm, QuestionForm
 from feedback.models import Request, Question
+
 
 def feedback_request(request):
     user = request.user
@@ -36,8 +37,13 @@ def feedback_request(request):
                 question = form.save(commit=False)
                 question.request = request
                 question.save()
-                
-            # TODO: messages.success(request, 'Your request for feedback was sent to {{ email address }}!')
+              
+            ''' 
+
+            TODO: make this work 
+            messages.success(request, 'Your request for feedback was sent to {{ email address }}!')
+           
+            '''
             return redirect('dashboard')
     else:
         request_form = FeedbackForm()
@@ -55,13 +61,14 @@ def feedback_questions(request, url):
     user = request.user
     feedback_detail = Request.objects.filter(url=url)
 
+
+    # TODO: cleanup this mess and make work
     if request.method == 'POST': 
 
         for request in feedback_detail:
             request_id = request.id
 
             feedback_questions = Question.objects.filter()
-            print 'posted'
     else:        
 
         for request in feedback_detail:
@@ -69,13 +76,8 @@ def feedback_questions(request, url):
 
             feedback_questions = Question.objects.filter()
 
-
     return render_to_response('questions.html', {
         'feedback_detail': feedback_detail,
-        'user': user,
         'feedback_questions': feedback_questions,
+        'user': user,
     }, RequestContext(request))
-
-
-
-

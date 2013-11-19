@@ -1,9 +1,10 @@
+/* == Base =========================================================== */ 
 body {
-	/*background: transparent url('../img/background.jpg') 0 -150px no-repeat;
-	background-size: 100%; */
 	padding: 35px; 
 }
 
+
+/* == Forms =========================================================== */ 
 
 form input {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -11,10 +12,23 @@ form input {
 }
 form textarea {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-	width: 350px;
+	width: 50%;
 	height: 100px;	
+	margin: 20px;
 }
 form label {
 	display: block;
 	font-weight: normal;
+}
+
+
+/* == Panels =========================================================== */
+
+.panel-heading {
+	position: relative;
+}
+.panel-heading .delete {
+	position: absolute;
+    right: 8px;
+    top: 8px;
 }

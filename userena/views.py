@@ -126,7 +126,7 @@ def signup(request, signup_form=SignupFormExtra,
 
 @secure_required
 def company_signup(request, signup_form=CompanySignupFormExtra,
-           template_name='userena/company_signup_form.html', success_url='/dashboard/',
+           template_name='userena/company_signup_form.html', success_url='/company/dashboard/',
            extra_context=None):
 
     if request.user.is_authenticated():
