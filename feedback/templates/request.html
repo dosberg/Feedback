@@ -70,7 +70,7 @@ $(document).ready(function () {
             $(".errorlist", row).remove();
             $(row).children().removeClass("error");
 
-            $(row).children().children().children().each(function () {
+            $(row).children().children().each(function () {
                 updateElementIndex(this, prefix, formCount);
                 $(this).val("");
                 $(this).closest('h3').text('Ask another question (e.g. What can I do better?):');
