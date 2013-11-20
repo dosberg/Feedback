@@ -25,6 +25,8 @@ from userena.utils import signin_redirect, get_profile_model, get_user_model
 from userena import signals as userena_signals
 from userena import settings as userena_settings
 
+from accounts.models import Company
+
 from guardian.decorators import permission_required_or_403
 
 import warnings
@@ -700,84 +702,27 @@ def profile_edit(request, username, edit_profile_form=EditProfileForm,
 def profile_detail(request, username,
     template_name=userena_settings.USERENA_PROFILE_DETAIL_TEMPLATE,
     extra_context=None, **kwargs):
-    """
-    Detailed view of an user.
 
-    :param username:
-        String of the username of which the profile should be viewed.
-
-    :param template_name:
-        String representing the template name that should be used to display
-        the profile.
-
-    :param extra_context:
-        Dictionary of variables which should be supplied to the template. The
-        ``profile`` key is always the current profile.
-
-    **Context**
-
-    ``profile``
-        Instance of the currently viewed ``Profile``.
-
-    """
     user = get_object_or_404(get_user_model(),
                              username__iexact=username)
 
     profile_model = get_profile_model()
+    
     try:
         profile = user.get_profile()
     except profile_model.DoesNotExist:
         profile = profile_model.objects.create(user=user)
-
-    if not profile.can_view_profile(request.user):
-        raise PermissionDenied
+            
     if not extra_context: extra_context = dict()
     extra_context['profile'] = user.get_profile()
+    extra_context['company'] = Company.objects.get(id=profile.company_id)
     extra_context['hide_email'] = userena_settings.USERENA_HIDE_EMAIL
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
 
 def profile_list(request, page=1, template_name='userena/profile_list.html',
                  paginate_by=50, extra_context=None, **kwargs): # pragma: no cover
-    """
-    Returns a list of all profiles that are public.
 
-    It's possible to disable this by changing ``USERENA_DISABLE_PROFILE_LIST``
-    to ``True`` in your settings.
-
-    :param page:
-        Integer of the active page used for pagination. Defaults to the first
-        page.
-
-    :param template_name:
-        String defining the name of the template that is used to render the
-        list of all users. Defaults to ``userena/list.html``.
-
-    :param paginate_by:
-        Integer defining the amount of displayed profiles per page. Defaults to
-        50 profiles per page.
-
-    :param extra_context:
-        Dictionary of variables that are passed on to the ``template_name``
-        template.
-
-    **Context**
-
-    ``profile_list``
-        A list of profiles.
-
-    ``is_paginated``
-        A boolean representing whether the results are paginated.
-
-    If the result is paginated. It will also contain the following variables.
-
-    ``paginator``
-        An instance of ``django.core.paginator.Paginator``.
-
-    ``page_obj``
-        An instance of ``django.core.paginator.Page``.
-
-    """
     warnings.warn("views.profile_list is deprecated. Use ProfileListView instead", DeprecationWarning, stacklevel=2)
 
     try:

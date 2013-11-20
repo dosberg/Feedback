@@ -232,7 +232,7 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = get_profile_model()
-        exclude = ('user','privacy',)
+        exclude = ('user','privacy','company_id','role','account_type', 'avatar',)
 
     def save(self, force_insert=False, force_update=False, commit=True):
         profile = super(EditProfileForm, self).save(commit=commit)

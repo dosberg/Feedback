@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load url from future %}
 
-{% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profile.{% endblocktrans %}{% endblock %}
+{% block title %}Settings{% endblock %}
 {% block content_title %}<h2>{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
 
 {% block content %}
@@ -38,9 +38,9 @@
               <dt>Account type</dt>
               <dd>{{ profile.get_account_type_display }}</dd>
             {% endif %}            
-            {% if profile.company_name %}
+            {% if profile.account_type == 2 %}
               <dt>Company name</dt>
-              <dd>{{ profile.company_name }}</dd>
+              <dd>{{ company.name }}</dd>
             {% endif %}
           {% endblock %}
         </dl>

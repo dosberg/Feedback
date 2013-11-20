@@ -1,0 +1,14 @@
+{% load url from future %}
+
+{% if user.is_authenticated %}
+	{% if profile.account_type == 2 %}
+		<a href="{% url 'company_dashboard' %}">{{ company.name }}</a> | 
+	{% endif %}
+	<a href="{% url 'dashboard' %}">Dashboard</a> | 
+	<a href="{% url 'feedback_request' %}">Request Feedback</a> | 
+	<a href="{% url 'userena_profile_detail' user.username %}">Settings</a> |
+	<a href="{% url 'userena_signout' %}">Logout</a>
+{% else %}	
+	<a href="{% url 'plans' %}">Sign up</a> | 
+	<a href="{% url 'userena_signin' %}">Sign in</a>
+{% endif %}	

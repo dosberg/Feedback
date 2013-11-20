@@ -101,6 +101,11 @@ TEMPLATE_DIRS = (
     path.join(SITE_ROOT, 'templates'),
 )
 
+
+import django.template
+django.template.add_to_builtins('django.templatetags.future')
+
+
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 

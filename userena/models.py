@@ -269,22 +269,10 @@ class UserenaBaseProfile(models.Model):
         return 'Profile of %(username)s' % {'username': self.user.username}
 
     def get_mugshot_url(self):
-        """
-        Returns the image containing the mugshot for the user.
 
-        The mugshot can be a uploaded image or a Gravatar.
-
-        Gravatar functionality will only be used when
-        ``USERENA_MUGSHOT_GRAVATAR`` is set to ``True``.
-
-        :return:
-            ``None`` when Gravatar is not used and no default image is supplied
-            by ``USERENA_MUGSHOT_DEFAULT``.
-
-        """
         # First check for a mugshot and if any return that.
-        if self.mugshot:
-            return self.mugshot.url
+        if self.avatar:
+            return self.avatar.url
 
         # Use Gravatar if the user wants to.
         if userena_settings.USERENA_MUGSHOT_GRAVATAR:

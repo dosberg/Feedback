@@ -20,7 +20,6 @@ def index(request):
 def dashboard(request):
 	feedback_questions = []
 	user = request.user 
-	profile = user.get_profile() 
 
 	feedback_requests = Request.objects.filter(user=user).order_by('timestamp').reverse()
 
@@ -31,7 +30,6 @@ def dashboard(request):
 	return render_to_response('dashboard.html', {
 		'feedback_requests': feedback_requests,
 		'feedback_questions': feedback_questions,
-		'profile': profile,
 		}, context_instance=RequestContext(request))
 
 
@@ -52,7 +50,6 @@ def company_dashboard(request):
 		return render_to_response('company_dashboard.html', {
 			'feedback_requests': feedback_requests,
 			'feedback_questions': feedback_questions,
-			'profile': profile,
 			}, context_instance=RequestContext(request))		
 	else: 
 		return redirect('/dashboard/')			

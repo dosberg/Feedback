@@ -70,11 +70,14 @@ class CompanySignupFormExtra(SignupFormOnlyEmail):
 
         company_name = self.cleaned_data['company_name']
         creator_id = user.id
-        company = Company.objects.create(name=company_name, creator_id=creator_id)
+        company = Company(name=company_name, creator_id=creator_id)
+        company.save()
+        company.id
 
         user_profile = user.get_profile()
         user_profile.account_type = '2'
         user_profile.role = '2'
+        user_profile.company_id = company.id
         user_profile.save()
 
         user.first_name = self.cleaned_data['first_name']
